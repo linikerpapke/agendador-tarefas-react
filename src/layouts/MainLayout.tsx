@@ -1,4 +1,5 @@
 import { Header } from "@/components/shared/Header";
+import { Footer } from "@/pages/Home/Footer";
 import { Outlet } from "react-router";
 
 export function MainLayout() {
@@ -9,6 +10,7 @@ export function MainLayout() {
             <main>
                 <Outlet />
             </main>
+            <Footer />
         </>
     )
 }
