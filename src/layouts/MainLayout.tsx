@@ -1,6 +1,7 @@
 import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
 import { Outlet } from "react-router";
+import { Toaster } from "@/components/ui/sonner"
 
 export function MainLayout() {
 
@@ -11,6 +12,7 @@ export function MainLayout() {
                 <Outlet />
             </main>
             <Footer />
+            <Toaster />
         </>
     )
 }
