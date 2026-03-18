@@ -83,8 +83,6 @@ export function Register() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        handleToast("Registrando usuário")
-
         const result = registerSchema.safeParse(dadosFormulario)
 
         if (!result.success) {
@@ -99,6 +97,8 @@ export function Register() {
 
             return
         }
+
+        handleToast("Registrando usuário")
 
         try {
             setIsLoading(true)
