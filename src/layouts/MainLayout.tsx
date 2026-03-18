@@ -1,4 +1,4 @@
-import { Header } from "@/components/shared/Header";
+import { Header } from "@/components/shared/Header/Header";
 import { Footer } from "@/components/shared/Footer";
 import { Outlet } from "react-router";
 import { Toaster } from "@/components/ui/sonner"

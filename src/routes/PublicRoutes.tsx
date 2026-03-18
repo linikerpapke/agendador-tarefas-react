@@ -1,9 +1,9 @@
-import { authService } from "@/services/authService";
+import { useAuth } from "@/context/auth/useAuth";
 import { Navigate, Outlet } from "react-router";
 
 export function PublicRoutes() {
 
-    const isLogged = authService.isLoggedIn();
+    const { isLogged } = useAuth()
 
     if (isLogged) {
         return <Navigate to="/tasks" />
