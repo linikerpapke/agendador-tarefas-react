@@ -17,11 +17,12 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { z } from "zod";
 import { toast } from "sonner"
-import { authService } from "@/services/authService"
+import { useAuth } from "@/context/auth/useAuth"
 
 export function Login() {
 
     const navigate = useNavigate();
+    const { login } = useAuth()
 
     const [dadosFormulario, setDadosFormulario] = useState({
         email: "",
@@ -102,7 +103,7 @@ export function Login() {
             setIsLoading(true)
             const response = await userService.login(dadosFormulario);
             const token = response
-            authService.saveToken(token)
+            login(token)
             navigate("/tasks")
         } catch (error) {
             handleToast(`Erro ao entrar na aplicação`)
