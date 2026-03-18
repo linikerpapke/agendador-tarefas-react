@@ -17,13 +17,13 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { z } from "zod";
 import { toast } from "sonner"
+import { authService } from "@/services/authService"
 
-export function Register() {
+export function Login() {
 
     const navigate = useNavigate();
 
     const [dadosFormulario, setDadosFormulario] = useState({
-        nome: "",
         email: "",
         senha: "",
     })
@@ -31,8 +31,7 @@ export function Register() {
     const [isLoading, setIsLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
-    const registerSchema = z.object({
-        nome: z.string().min(3, "Nome deve ter pelo menos 3 letras"),
+    const loginSchema = z.object({
         email: z.email("informe um e-mail válido"),
         senha: z.string().min(6, "A senha deve contar pelo menos 6 caracteres"),
     });
@@ -47,7 +46,7 @@ export function Register() {
     }
 
     const validateField = (name: string, value: string) => {
-        const result = registerSchema.safeParse({
+        const result = loginSchema.safeParse({
             ...dadosFormulario,
             [name]: value
         })
@@ -76,16 +75,13 @@ export function Register() {
     }
 
     const handleToast = (text: string) => {
-        
         toast(text, { position: "bottom-center" })
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        handleToast("Registrando usuário")
-
-        const result = registerSchema.safeParse(dadosFormulario)
+        const result = loginSchema.safeParse(dadosFormulario)
 
         if (!result.success) {
             const fieldErros: Record<string, string> = {}
@@ -100,14 +96,17 @@ export function Register() {
             return
         }
 
+        handleToast("Entrando")
+
         try {
             setIsLoading(true)
-            const response = await userService.register(dadosFormulario);
-            console.log("Usuario Criado:", response)
-            navigate("/login")
+            const response = await userService.login(dadosFormulario);
+            const token = response
+            authService.saveToken(token)
+            navigate("/tasks")
         } catch (error) {
-            handleToast(`Erro ao registrar usuário: ${error}`)
-            console.error("Erro ao registrar usuario", error)
+            handleToast(`Erro ao entrar na aplicação`)
+            console.error("Erro ao entrar na aplicação usuario", error)
         } finally {
             setIsLoading(false)
         }
@@ -119,29 +118,12 @@ export function Register() {
                 <CardHeader>
                     <CardTitle>Criar conta</CardTitle>
                     <CardDescription>
-                        Preencha os dados abaixo para se registrar
+                        Preencha os dados abaixo para entrar
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Nome</Label>
-                                <Input
-                                    id="nome"
-                                    name="nome"
-                                    type="text"
-                                    placeholder="Digite seu nome"
-                                    value={dadosFormulario.nome}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    aria-invalid={!!errors.nome}
-                                    disabled={isLoading}
-                                />
-                                {errors.nome && (
-                                    <FieldError>{errors.nome}</FieldError>
-                                )}
-                            </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email</Label>
                                 <Input
@@ -194,7 +176,7 @@ export function Register() {
                                 )}
                             </div>
                             <Button type="submit" className="w-full" disabled={isLoading}>
-                                {isLoading ? (<span className="flex items-center justify-center gap-2"> Registrando <Spinner /></span>) : "Registrar"}
+                                {isLoading ? (<span className="flex items-center justify-center gap-2"> Entrando <Spinner /></span>) : "Entrar"}
                             </Button>
                         </div>
                     </form>
