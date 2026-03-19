@@ -8,6 +8,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuth } from "@/context/auth/useAuth"
+import { useUser } from "@/context/user/useUser"
 import {
     BadgeCheckIcon,
     LogOutIcon,
@@ -18,10 +19,15 @@ export function HeaderDropDownMenu() {
 
     const navigate = useNavigate()
     const { logout } = useAuth()
+    const { user } = useUser()
 
     function handleLogout() {
         logout()
         navigate("/login")
+    }
+
+    function getInitial(nome?: string) {
+        return nome ? nome[0].toUpperCase() : "U"
     }
 
     return (
@@ -30,13 +36,13 @@ export function HeaderDropDownMenu() {
                 <button className="rounded-full">
                     <Avatar>
                         <AvatarImage src="" alt="shadcn" />
-                        <AvatarFallback className="bg-blue-200">U</AvatarFallback>
+                        <AvatarFallback className="bg-blue-200">{getInitial(user?.nome)}</AvatarFallback>
                     </Avatar>
                 </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/user-data")}>
                         <BadgeCheckIcon />
                         Meus Dados
                     </DropdownMenuItem>

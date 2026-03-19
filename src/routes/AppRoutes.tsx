@@ -6,6 +6,7 @@ import { Login } from "@/pages/Login/Login";
 import { Tasks } from "@/pages/Tasks/Tasks";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { PublicRoutes } from "./PublicRoutes";
+import { UserData } from "@/pages/UserData/UserData";
 
 export const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/tasks",
                         element: <Tasks />
+                    },
+                    {
+                        path: "/user-data",
+                        element: <UserData />
                     },
                 ]
             },
