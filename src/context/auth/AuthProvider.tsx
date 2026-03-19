@@ -21,6 +21,7 @@ export function AuthProvider({ children }: Props) {
 
     function logout() {
         authService.removeToken();
+        authService.removeUser();
         setIsLogged(false)
     }
 

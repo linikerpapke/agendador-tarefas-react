@@ -1,4 +1,8 @@
+import { jwtDecode } from "jwt-decode"
+import type { UserResponse } from "./userService";
+
 const TOKEN_KEY = 'auth_token';
+const USER_KEY = 'logged_user';
 
 export const authService = {
 
@@ -16,5 +20,28 @@ export const authService = {
 
     isLoggedIn() {
         return !!this.getToken()
-    }
+    },
+
+    saveUser(user: UserResponse) {
+        localStorage.setItem(USER_KEY, JSON.stringify(user))
+    },
+
+    getUser(): UserResponse | null {
+        const user = localStorage.getItem(USER_KEY)
+        if (!user) return null
+        return JSON.parse(user)
+    },
+
+    removeUser() {
+        localStorage.removeItem(USER_KEY)
+    },
+
+    getEmailFromToken(token: string) {
+        try {
+            const decoded = jwtDecode(token)
+            return decoded?.sub || null
+        } catch (error) {
+            return null
+        }
+    },
 }
