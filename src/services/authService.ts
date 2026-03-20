@@ -36,7 +36,11 @@ export const authService = {
         localStorage.removeItem(USER_KEY)
     },
 
-    getEmailFromToken(token: string) {
+    getEmail(): string | null {
+        const token = this.getToken()
+
+        if (!token) return null
+
         try {
             const decoded = jwtDecode(token)
             return decoded?.sub || null

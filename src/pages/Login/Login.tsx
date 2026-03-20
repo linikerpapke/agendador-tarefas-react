@@ -107,7 +107,7 @@ export function Login() {
             const response = await userService.login(dadosFormulario);
             const token = response
             login(token)
-            const user = await userService.getUserByEmail(token)
+            const user = await userService.getUserByEmail()
             authService.saveUser(user)
             setUser(user)
             navigate("/tasks")

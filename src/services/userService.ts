@@ -34,6 +34,25 @@ export interface UserResponse {
     }[] | null
 }
 
+//TODO: Tipar corretamente os Any
+//TODO: Tipar retorno do CEP:
+
+export interface CepResponse {
+  cep: string,
+  logradouro: string,
+  complemento: string,
+  unidade?: string,
+  bairro: string,
+  localidade: string,
+  uf: string,
+  estado: string,
+  regiao: string,
+  ibge: number,
+  gia: number,
+  ddd: number,
+  siafi: number
+}
+
 export const userService = {
 
     async register(data: RegisterRequest) {
@@ -46,19 +65,46 @@ export const userService = {
         return response.data
     },
 
-    async getUserByEmail(token: string): Promise<UserResponse> {
-        const email = authService.getEmailFromToken(token)
+    async getUserByEmail(): Promise<UserResponse> {
+        const email = authService.getEmail()
 
         if (!email) {
             throw new Error("Token inválido")
         }
 
-        const response = await api.get(`/usuario?email=${email}`, {
-            headers: {
-                Authorization: token
-            }
-        })
+        const response = await api.get(`/usuario?email=${email}`)
 
         return response.data
-    }
+    },
+
+    async saveEndereco(data: any) {
+        const response = await api.post("/usuario/endereco", data)
+
+        return response.data
+    },
+
+    async updateEndereco(data: any) {
+        const response = await api.put(`/usuario/endereco?id=${data.id}`, data)
+
+        return response.data
+    },
+
+    async buscaCep(cep: string) {
+        const response = await api.get(`/usuario/endereco/${cep}`)
+
+        return response.data
+    },
+
+    async saveTelefone(data: any) {
+        const response = await api.post("/usuario/telefone", data)
+
+        return response.data
+    },
+
+    async updateTelefone(data: any) {
+        const response = await api.put(`/usuario/telefone?id=${data.id}`, data)
+
+        return response.data
+    },
+
 }
