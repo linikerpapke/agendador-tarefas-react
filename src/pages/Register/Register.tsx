@@ -102,8 +102,7 @@ export function Register() {
 
         try {
             setIsLoading(true)
-            const response = await userService.register(dadosFormulario);
-            console.log("Usuario Criado:", response)
+            await userService.register(dadosFormulario);
             navigate("/login")
         } catch (error) {
             handleToast(`Erro ao registrar usuário: ${error}`)
@@ -114,7 +113,7 @@ export function Register() {
     }
 
     return (
-        <div className="h-screen flex justify-center items-center">
+        <div className="min-h-screen flex justify-center items-center p-10">
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle>Criar conta</CardTitle>

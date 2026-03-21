@@ -1,5 +1,5 @@
 import { authService } from "@/services/authService"
-import type { UserResponse } from "@/services/userService"
+import { userService, type UserResponse } from "@/services/userService"
 import { useEffect, useState } from "react"
 import { UserContext } from "./UserContext"
 
@@ -17,8 +17,15 @@ export function UserProvider({ children }: Props) {
         }
     }, [])
 
+    async function refreshUser() {
+        const updatedUser = await userService.getUserByEmail()
+
+        setUser(updatedUser)
+        authService.saveUser(updatedUser)
+    }
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, refreshUser }}>
             {children}
         </UserContext.Provider>
     )

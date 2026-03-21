@@ -12,45 +12,46 @@ export interface LoginRequest {
     senha: string,
 }
 
+export type Endereco = {
+    id?: number,
+    rua: string,
+    numero: number,
+    complemento: number,
+    cidade: string,
+    estado: string,
+    cep: number
+}
+
+export type Telefone = {
+    id?: number,
+    numero: number,
+    ddd: number
+}
+
 export interface UserResponse {
     id?: string,
     nome: string,
     email: string,
-    enderecos:
-    {
-        id: number,
-        rua: string,
-        numero: number,
-        complemento: number,
-        cidade: string,
-        estado: string,
-        cep: number
-    }[] | null,
-    telefones:
-    {
-        id: number,
-        numero: number,
-        ddd: number
-    }[] | null
+    enderecos: Endereco[] | null,
+    telefones: Telefone[] | null
 }
 
-//TODO: Tipar corretamente os Any
 //TODO: Tipar retorno do CEP:
 
 export interface CepResponse {
-  cep: string,
-  logradouro: string,
-  complemento: string,
-  unidade?: string,
-  bairro: string,
-  localidade: string,
-  uf: string,
-  estado: string,
-  regiao: string,
-  ibge: number,
-  gia: number,
-  ddd: number,
-  siafi: number
+    cep: string,
+    logradouro: string,
+    complemento: string,
+    unidade?: string,
+    bairro: string,
+    localidade: string,
+    uf: string,
+    estado: string,
+    regiao: string,
+    ibge: number,
+    gia: number,
+    ddd: number,
+    siafi: number
 }
 
 export const userService = {
@@ -77,14 +78,14 @@ export const userService = {
         return response.data
     },
 
-    async saveEndereco(data: any) {
+    async saveEndereco(data: Endereco) {
         const response = await api.post("/usuario/endereco", data)
 
         return response.data
     },
 
-    async updateEndereco(data: any) {
-        const response = await api.put(`/usuario/endereco?id=${data.id}`, data)
+    async updateEndereco(id: number, data: Endereco) {
+        const response = await api.put(`/usuario/endereco?id=${id}`, data)
 
         return response.data
     },
@@ -95,14 +96,14 @@ export const userService = {
         return response.data
     },
 
-    async saveTelefone(data: any) {
+    async saveTelefone(data: Telefone) {
         const response = await api.post("/usuario/telefone", data)
 
         return response.data
     },
 
-    async updateTelefone(data: any) {
-        const response = await api.put(`/usuario/telefone?id=${data.id}`, data)
+    async updateTelefone(id: number, data: Telefone) {
+        const response = await api.put(`/usuario/telefone?id=${id}`, data)
 
         return response.data
     },
