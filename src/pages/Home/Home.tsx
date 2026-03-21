@@ -4,7 +4,7 @@ import Hero from "@/assets/imagem-hero.svg"
 export function Home() {
 
     return (
-        <main className="min-h-screen flex items-center">
+        <main className="min-h-screen flex justify-center items-center p-10">
             <section className="mx-auto px-6 py-16 grid gap-12 lg:grid-cols-2 items-center">
                 <header>
                     <h1 className="text-4xl font-bold tracking-tight">

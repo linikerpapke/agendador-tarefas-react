@@ -4,6 +4,7 @@ import { createContext } from "react";
 type UserContextType = {
     user: UserResponse | null
     setUser: (user: UserResponse | null) => void
+    refreshUser: () => Promise<void>
 }
 
 export const UserContext = createContext({} as UserContextType)

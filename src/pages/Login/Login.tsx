@@ -107,7 +107,7 @@ export function Login() {
             const response = await userService.login(dadosFormulario);
             const token = response
             login(token)
-            const user = await userService.getUserByEmail(token)
+            const user = await userService.getUserByEmail()
             authService.saveUser(user)
             setUser(user)
             navigate("/tasks")
@@ -120,7 +120,7 @@ export function Login() {
     }
 
     return (
-        <div className="h-screen flex justify-center items-center">
+        <div className="min-h-screen flex justify-center items-center p-10">
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle>Criar conta</CardTitle>
