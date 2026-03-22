@@ -1,6 +1,9 @@
-export const Tasks = () => {
+import { EmptyTasks } from "./tasks-components/EmptyTasks"
 
-    return(
-        <div className="min-h-screen flex justify-center items-center p-10">Hello Tasks</div>
+export function Tasks() {
+    return (
+        <div className="min-h-screen flex justify-center items-start p-10">
+            <EmptyTasks />
+        </div>
     )
-} 
+}
