@@ -4,12 +4,15 @@ import './index.css'
 import App from './App.tsx'
 import { AuthProvider } from './context/auth/AuthProvider.tsx'
 import { UserProvider } from './context/user/UserProvider.tsx'
+import { TasksProvider } from './context/tasks/TasksProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
       <UserProvider>
-        <App />
+        <TasksProvider>
+          <App />
+        </TasksProvider>
       </UserProvider>
     </AuthProvider>
   </StrictMode>,

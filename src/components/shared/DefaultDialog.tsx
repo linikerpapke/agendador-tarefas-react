@@ -24,6 +24,7 @@ type FieldType = {
   name: string
   label: string
   value?: string | number
+  type?: "text" | "datetime-local" | "textarea"
   button?: {
     icon: React.ReactNode
     onClick: (value: any, helpers: FormHelpers) => void
@@ -178,6 +179,7 @@ export function DefaultDialog({ open, onClose, title, fields, schema, onSave, on
                     <Input
                       name={field.name}
                       value={formData[field.name] || ""}
+                      type={field.type || "text"}
                       onChange={(e) => handleChange(field.name, e.target.value)}
                       onBlur={handleBlur}
                       aria-invalid={!!errors[field.name]}
