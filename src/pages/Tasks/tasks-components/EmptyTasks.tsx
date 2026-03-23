@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button"
 import {
     Empty,
-    EmptyContent,
     EmptyDescription,
     EmptyHeader,
     EmptyMedia,
@@ -21,11 +19,6 @@ export function EmptyTasks() {
                         Você ainda não possui tarefas agendadas. Cadastre a sua primeira tarefa.
                     </EmptyDescription>
                 </EmptyHeader>
-                <EmptyContent>
-                    <Button className="cursor-pointer" variant="default" size="sm">
-                        Cadastrar Tarefa
-                    </Button>
-                </EmptyContent>
             </Empty>
     )
 }
